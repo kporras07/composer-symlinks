@@ -21,9 +21,14 @@ class ScriptHandler
 
         foreach ($symlinks as $sourceRelativePath => $targetRelativePath) {
           $sourceAbsolutePath = sprintf('%s/%s', $rootPath, $sourceRelativePath);
+          $targetAbsolutePath = sprintf('%s/%s', $rootPath, $targetRelativePath);
             if (!file_exists($sourceAbsolutePath)) {
                 continue;
             }
+
+          if (file_exists($targetAbsolutePath)) {
+            $filesystem->remove($targetAbsolutePath);
+          }
 
             $event->getIO()->write(sprintf(
                 '<info>Creating symlink for "%s" into "%s"</info>',
