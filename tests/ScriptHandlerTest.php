@@ -6,9 +6,9 @@ use Composer\Config;
 use Composer\IO\NullIO;
 use Composer\Package\RootPackage;
 use Composer\Script\Event;
+use Kporras07\ComposerSymlinks\ScriptHandler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
-use Kporras07\ComposerSymlinks\ScriptHandler;
 
 class ScriptHandlerTest extends TestCase
 {
