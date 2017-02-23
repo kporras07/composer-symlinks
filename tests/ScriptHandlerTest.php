@@ -48,8 +48,8 @@ class ScriptHandlerTest extends TestCase
             ->expects($this->exactly(2))
             ->method('symlink')
             ->withConsecutive(
-                [__DIR__ . '/Fixtures/foo', 'bar'],
-                [__DIR__ . '/Fixtures/bar.txt', 'foo.txt']
+                ['foo', 'bar'],
+                ['bar.txt', 'foo.txt']
             );
 
         $this->package->setExtra([

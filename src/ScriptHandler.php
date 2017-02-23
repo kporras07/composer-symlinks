@@ -31,7 +31,7 @@ class ScriptHandler
                 $targetRelativePath
             ));
 
-            $filesystem->symlink($sourceAbsolutePath, sprintf('%s', $targetRelativePath));
+            $filesystem->symlink($sourceRelativePath, sprintf('%s', $targetRelativePath));
         }
     }
 }
