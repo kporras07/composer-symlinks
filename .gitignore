@@ -10,3 +10,6 @@
 /.idea/
 /nbproject/
 /local/
+
+tests/Fixtures/bar
+tests/Fixtures/foo.txt

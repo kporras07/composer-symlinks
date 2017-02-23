@@ -44,13 +44,6 @@ class ScriptHandlerTest extends TestCase
                 ['<info>Creating symlink for "foo" into "bar"</info>'],
                 ['<info>Creating symlink for "bar.txt" into "foo.txt"</info>']
             );
-        $this->filesystem
-            ->expects($this->exactly(2))
-            ->method('symlink')
-            ->withConsecutive(
-                ['foo', 'bar'],
-                ['bar.txt', 'foo.txt']
-            );
 
         $this->package->setExtra([
             'symlinks' => [
