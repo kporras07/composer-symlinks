@@ -1,0 +1,35 @@
+{
+    "name": "kporras07/composer-symlinks",
+    "description": "Composer script handling symlinks",
+    "keywords": ["composer", "script", "symlink"],
+    "homepage": "https://github.com/kporras07/composer-symlinks",
+    "license": "MIT",
+    "authors": [
+        {"name": "Kevin Porras", "email": "kporras07@gmail.com"}
+    ],
+    "require": {
+        "symfony/filesystem": "^2.5 || ^3.0"
+    },
+    "require-dev": {
+        "composer/composer": "^1.0@dev",
+        "phpunit/phpunit": "^5.5",
+        "vanio/coding-standards": "^0.1@dev"
+    },
+    "autoload": {
+        "psr-4": {"Kporras07\\ComposerSymlinks\\": "src/"},
+        "exclude-from-classmap": ["/tests/"]
+    },
+    "autoload-dev": {
+        "psr-4": { "Kporras07\\ComposerSymlinks\\Tests\\": "tests/" }
+    },
+    "scripts": {
+        "test": "\"vendor/bin/phpunit\"",
+        "lint": "\"vendor/bin/phpcs\" --standard=vendor/vanio/coding-standards/ruleset.xml --extensions=php --encoding=utf-8 --ignore=vendor .",
+        "fix": "\"vendor/bin/phpcbf\" --standard=vendor/vanio/coding-standards/ruleset.xml --extensions=php --encoding=utf-8 --no-patch --ignore=vendor ."
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}
