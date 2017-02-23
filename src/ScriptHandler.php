@@ -20,15 +20,15 @@ class ScriptHandler
         $filesystem = $filesystem ?: new Filesystem;
 
         foreach ($symlinks as $sourceRelativePath => $targetRelativePath) {
-          $sourceAbsolutePath = sprintf('%s/%s', $rootPath, $sourceRelativePath);
-          $targetAbsolutePath = sprintf('%s/%s', $rootPath, $targetRelativePath);
+            $sourceAbsolutePath = sprintf('%s/%s', $rootPath, $sourceRelativePath);
+            $targetAbsolutePath = sprintf('%s/%s', $rootPath, $targetRelativePath);
             if (!file_exists($sourceAbsolutePath)) {
                 continue;
             }
 
-          if (file_exists($targetAbsolutePath)) {
-            $filesystem->remove($targetAbsolutePath);
-          }
+            if (file_exists($targetAbsolutePath)) {
+                $filesystem->remove($targetAbsolutePath);
+            }
 
             $event->getIO()->write(sprintf(
                 '<info>Creating symlink for "%s" into "%s"</info>',
@@ -36,7 +36,13 @@ class ScriptHandler
                 $targetRelativePath
             ));
 
-            $filesystem->symlink($sourceRelativePath, sprintf('%s', $targetRelativePath));
+            $targetDirname = dirname($targetAbsolutePath);
+            $sourceRelativePath = substr($filesystem->makePathRelative($sourceAbsolutePath, $targetDirname), 0, -1);
+
+            // Build and execute final command.
+            $cmd = 'cd ' . $targetDirname . ' && ln -s ' . $sourceRelativePath . ' ' . basename($targetRelativePath);
+            exec($cmd);
+
         }
     }
 }
