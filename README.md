@@ -1,39 +1,35 @@
 # Symlink Handler
 
-[![Build Status](https://travis-ci.org/vaniocz/symlink-handler.svg?branch=master)](https://travis-ci.org/vaniocz/symlink-handler)
-[![Coverage Status](https://coveralls.io/repos/github/vaniocz/symlink-handler/badge.svg?branch=master)](https://coveralls.io/github/vaniocz/symlink-handler?branch=master)
-![PHP7](https://img.shields.io/badge/php-7-6B7EB9.svg)
-[![License](https://poser.pugx.org/vanio/symlink-handler/license)](https://github.com/vaniocz/symlink-handler/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/kporras07/composer-symlinks.svg?branch=master)](https://travis-ci.org/kporras07/composer-symlinks)
 
-Composer script handling creation of symlinks from your selected installed dependencies to location of your choice.
+Composer script handling creation of symlinks inside your composer project.
 
 # Installation
 Installation can be done as usually using composer.
-`composer require vanio/symlink-handler`
+`composer require kporras07/composer-symlinks`
 
 # Usage
 Add the following in your root `composer.json` file:
 
 ```php
 "require": {
-    "vanio/symlink-handler": "dev-master",
-    "components/jquery": "2.2.1"
+    "kporras07/composer-symlinks": "dev-master"
 },
 "scripts": {
     "post-install-cmd": [
-        "Vanio\\SymlinkHandler\\ScriptHandler::createSymlinks"
+        "Kporras07\\SymlinkHandler\\ScriptHandler::createSymlinks"
     ],
     "post-update-cmd": [
-        "Vanio\\SymlinkHandler\\ScriptHandler::createSymlinks"
+        "Kporras07\\SymlinkHandler\\ScriptHandler::createSymlinks"
     ]
 },
 "extra": {
     "symlinks": {
-        "components": "web/vendor/components"
+        "components": "web/components"
     }
 }
 ```
 
-After running either `composer install` or `composer update`, jquery will be accessible from your web folder `web/vendor/components/jquery/jquery.min.js`.
+After running either `composer install` or `composer update`, components folder will be accessible from your web folder `web/components/`.
 
 But of course, you have to be careful when making symlinks to a folder which is publicly accessible.
