@@ -1,5 +1,5 @@
 <?php
-namespace Vanio\SymlinkHandler\Tests;
+namespace Kporras07\SymlinkHandler\Tests;
 
 use Composer\Composer;
 use Composer\Config;
@@ -8,7 +8,7 @@ use Composer\Package\RootPackage;
 use Composer\Script\Event;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
-use Vanio\SymlinkHandler\ScriptHandler;
+use Kporras07\ComposerSymlinks\ScriptHandler;
 
 class ScriptHandlerTest extends TestCase
 {
@@ -48,8 +48,8 @@ class ScriptHandlerTest extends TestCase
             ->expects($this->exactly(2))
             ->method('symlink')
             ->withConsecutive(
-                [__DIR__ . '/Fixtures/vendor/foo', __DIR__ . '/Fixtures/bar'],
-                [__DIR__ . '/Fixtures/vendor/bar.txt', __DIR__ . '/Fixtures/foo.txt']
+                [__DIR__ . '/Fixtures/foo', 'bar'],
+                [__DIR__ . '/Fixtures/bar.txt', 'foo.txt']
             );
 
         $this->package->setExtra([

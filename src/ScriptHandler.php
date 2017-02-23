@@ -15,10 +15,13 @@ class ScriptHandler
         /** @var Config $config */
         $config = $event->getComposer()->getConfig();
         $symlinks = (array) $package->getExtra()['symlinks'] ? (array) $package->getExtra()['symlinks'] : [];
+        $vendorPath = $config->get('vendor-dir');
+        $rootPath = dirname($vendorPath);
         $filesystem = $filesystem ?: new Filesystem;
 
         foreach ($symlinks as $sourceRelativePath => $targetRelativePath) {
-            if (!file_exists($sourceRelativePath)) {
+          $sourceAbsolutePath = sprintf('%s/%s', $rootPath, $sourceRelativePath);
+            if (!file_exists($sourceAbsolutePath)) {
                 continue;
             }
 

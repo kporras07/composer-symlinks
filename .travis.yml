@@ -13,3 +13,4 @@ install:
 
 script:
     - php -n ~/.phpenv/versions/$(phpenv version-name)/bin/composer lint
+    - ./vendor/bin/phpunit
