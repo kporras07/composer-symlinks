@@ -39,8 +39,13 @@ class ScriptHandler
             $targetDirname = dirname($targetAbsolutePath);
             $sourceRelativePath = substr($filesystem->makePathRelative($sourceAbsolutePath, $targetDirname), 0, -1);
 
+            $command = 'ln -s';
+            if (!$event->isDevMode()) {
+                $command = 'cp -r';
+            }
+
             // Build and execute final command.
-            $cmd = 'cd ' . $targetDirname . ' && ln -s ' . $sourceRelativePath . ' ' . basename($targetRelativePath);
+            $cmd = 'cd ' . $targetDirname . ' && ' . $command . ' ' . $sourceRelativePath . ' ' . basename($targetRelativePath);
             exec($cmd);
 
         }
