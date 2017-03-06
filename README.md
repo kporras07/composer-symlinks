@@ -4,6 +4,8 @@
 
 Composer script handling creation of symlinks inside your composer project.
 
+*Note:* Symlinks will become files copy when composer is run with `--no-dev`
+
 # Installation
 Installation can be done as usually using composer.
 `composer require kporras07/composer-symlinks`
