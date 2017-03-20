@@ -19,10 +19,10 @@ Add the following in your root `composer.json` file:
 },
 "scripts": {
     "post-install-cmd": [
-        "Kporras07\\SymlinkHandler\\ScriptHandler::createSymlinks"
+        "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks"
     ],
     "post-update-cmd": [
-        "Kporras07\\SymlinkHandler\\ScriptHandler::createSymlinks"
+        "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks"
     ]
 },
 "extra": {
