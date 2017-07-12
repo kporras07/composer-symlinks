@@ -45,6 +45,8 @@ class ScriptHandler
             }
 
             // Build and execute final command.
+            $mkdir_cmd = 'mkdir -p ' . $targetDirname;
+            exec($mkdir_cmd);
             $cmd = 'cd ' . $targetDirname . ' && ' . $command . ' ' . $sourceRelativePath . ' ' . basename($targetRelativePath);
             exec($cmd);
 
