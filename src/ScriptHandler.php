@@ -22,34 +22,55 @@ class ScriptHandler
         foreach ($symlinks as $sourceRelativePath => $targetRelativePath) {
             $sourceAbsolutePath = sprintf('%s/%s', $rootPath, $sourceRelativePath);
             $targetAbsolutePath = sprintf('%s/%s', $rootPath, $targetRelativePath);
-            if (!file_exists($sourceAbsolutePath)) {
+            if (!$filesystem->exists($sourceAbsolutePath)) {
+                $event->getIO()->write(sprintf(
+                  'Source path %s does not exist, skipping.',
+                  $sourceAbsolutePath
+                ), true, $event->getIO()::VERBOSE);
                 continue;
             }
 
-            if (file_exists($targetAbsolutePath)) {
+            if ($filesystem->exists($targetAbsolutePath)) {
                 $filesystem->remove($targetAbsolutePath);
             }
-
-            $event->getIO()->write(sprintf(
-                '<info>Creating symlink for "%s" into "%s"</info>',
-                $sourceRelativePath,
-                $targetRelativePath
-            ));
 
             $targetDirname = dirname($targetAbsolutePath);
             $sourceRelativePath = substr($filesystem->makePathRelative($sourceAbsolutePath, $targetDirname), 0, -1);
 
-            $command = 'ln -s';
-            if (!$event->isDevMode()) {
-                $command = 'cp -r';
+            try {
+                $filesystem->mkdir($targetDirname);
+            } catch (\Exception $e) {
+                $event->getIO()->writeError($e->getMessage());
             }
 
-            // Build and execute final command.
-            $mkdirCmd = 'mkdir -p ' . $targetDirname;
-            exec($mkdirCmd);
-            $cmd = 'cd ' . $targetDirname . ' && ' . $command . ' ' . $sourceRelativePath . ' ' . basename($targetRelativePath);
-            exec($cmd);
-
+            if ($event->isDevMode()) {
+                try {
+                    $event->getIO()->write(sprintf(
+                        '<info>Creating symlink for "%s" into "%s"</info>',
+                        $sourceRelativePath,
+                        $targetRelativePath
+                    ));
+                    $filesystem->symlink($sourceRelativePath, $targetRelativePath, true);
+                } catch (\Exception $e) {
+                    $event->getIO()->writeError($e->getMessage());
+                }
+            }
+            else {
+                try {
+                    $event->getIO()->write(sprintf(
+                        '<info>Copying "%s" into "%s"</info>',
+                        $sourceAbsolutePath,
+                        $targetAbsolutePath
+                    ));
+                    $filesystem->mirror($sourceAbsolutePath, $targetAbsolutePath, null, [
+                      'override' => true,
+                      'copyonwindows' => true,
+                      'delete' => true,
+                    ]);
+                } catch (\Exception $e) {
+                    $event->getIO()->writeError($e->getMessage());
+                }
+            }
         }
     }
 }
