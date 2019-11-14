@@ -44,6 +44,9 @@ class ScriptHandler
                 $command = 'cp -r';
             }
 
+            // Escape spaces in path.
+	        $targetDirname = preg_replace('/(?<!\\))[ ]/', '\\ ', $targetDirname);
+            
             // Build and execute final command.
             $mkdirCmd = 'mkdir -p ' . $targetDirname;
             exec($mkdirCmd);
