@@ -54,4 +54,22 @@ class ScriptHandlerTest extends TestCase
         ]);
         ScriptHandler::createSymlinks($this->event, $this->filesystem);
     }
+
+    /**
+     * As the `ln` command is executed, it first `cd`s into the destination directory. If there is a space
+     * anywhere in the path, the `cd` command fails to run properly and the operation fails.
+     *
+     * @see https://www.phpliveregex.com/p/uaf#tab-preg-replace
+     */
+    function test_escape_spaces_in_target_dir()
+    {
+        $sampledir = '/users/BrianHenryIE/Sites/foo bar/';
+
+        $expected = '/users/BrianHenryIE/Sites/foo\ bar/';
+
+        $actual = preg_replace('/(?<!\\))[ ]/', '\\ ', $sampledir);
+
+        $this->assertSame($expected, $actual);
+    }
+
 }
