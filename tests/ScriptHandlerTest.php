@@ -72,4 +72,27 @@ class ScriptHandlerTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
+    /**
+     * When the destination of the symlink contained a trailing slash, the source would be deleted.
+     *
+     * e.g. the config "trunk": "wp-content/plugins/bh-wp-technique-gym/" would delete trunk.
+     */
+    function test_input_sanitization()
+    {
+        $this->io
+            ->expects($this->exactly(1))
+            ->method('write')
+            ->withConsecutive(
+                ['<info>Creating symlink for "foo" into "bar"</info>'],
+                ['<info>Creating symlink for "foo2" into "bar"</info>']
+            );
+
+        $this->package->setExtra([
+            'symlinks' => [
+                'foo' => 'bar/',
+                'foo2' => 'bar',
+            ],
+        ]);
+        ScriptHandler::createSymlinks($this->event, $this->filesystem);
+    }
 }

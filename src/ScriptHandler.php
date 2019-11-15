@@ -30,6 +30,9 @@ class ScriptHandler
                 $filesystem->remove($targetAbsolutePath);
             }
 
+            // Remove trailing slash that can cause the target to be deleted by ln.
+            $targetRelativePath = rtrim($targetRelativePath, '/');
+
             $event->getIO()->write(sprintf(
                 '<info>Creating symlink for "%s" into "%s"</info>',
                 $sourceRelativePath,
