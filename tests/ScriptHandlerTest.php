@@ -73,7 +73,7 @@ class ScriptHandlerTest extends TestCase
     }
 
     /**
-     * When the destination of the symlink contained a trailing slash, the source would be deleted.
+     * When the location of the new symlink contained a trailing slash, the original data would be deleted.
      *
      * e.g. the config "trunk": "wp-content/plugins/bh-wp-technique-gym/" would delete trunk.
      */

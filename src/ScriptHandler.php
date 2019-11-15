@@ -20,6 +20,9 @@ class ScriptHandler
         $filesystem = $filesystem ?: new Filesystem;
 
         foreach ($symlinks as $sourceRelativePath => $targetRelativePath) {
+            // Remove trailing slash that can cause the target to be deleted by ln.
+            $targetRelativePath = rtrim($targetRelativePath, '/');
+
             $sourceAbsolutePath = sprintf('%s/%s', $rootPath, $sourceRelativePath);
             $targetAbsolutePath = sprintf('%s/%s', $rootPath, $targetRelativePath);
             if (!file_exists($sourceAbsolutePath)) {
@@ -29,9 +32,6 @@ class ScriptHandler
             if (file_exists($targetAbsolutePath)) {
                 $filesystem->remove($targetAbsolutePath);
             }
-
-            // Remove trailing slash that can cause the target to be deleted by ln.
-            $targetRelativePath = rtrim($targetRelativePath, '/');
 
             $event->getIO()->write(sprintf(
                 '<info>Creating symlink for "%s" into "%s"</info>',
