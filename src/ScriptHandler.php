@@ -20,6 +20,9 @@ class ScriptHandler
         $filesystem = $filesystem ?: new Filesystem;
 
         foreach ($symlinks as $sourceRelativePath => $targetRelativePath) {
+            // Remove trailing slash that can cause the target to be deleted by ln.
+            $targetRelativePath = rtrim($targetRelativePath, '/');
+
             $sourceAbsolutePath = sprintf('%s/%s', $rootPath, $sourceRelativePath);
             $targetAbsolutePath = sprintf('%s/%s', $rootPath, $targetRelativePath);
             if (!file_exists($sourceAbsolutePath)) {
@@ -43,6 +46,9 @@ class ScriptHandler
             if (!$event->isDevMode()) {
                 $command = 'cp -r';
             }
+
+            // Escape spaces in path.
+            $targetDirname = preg_replace('/(?<!\\))[ ]/', '\\ ', $targetDirname);
 
             // Build and execute final command.
             $mkdirCmd = 'mkdir -p ' . $targetDirname;
