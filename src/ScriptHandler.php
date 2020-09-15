@@ -49,7 +49,6 @@ class ScriptHandler
                 $targetRelativePath
             ));
             
-            
             // Escape spaces in path.
             $targetDirname = preg_replace('/(?<!\\))[ ]/', '\\ ', $targetDirname);
 
