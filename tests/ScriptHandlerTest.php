@@ -41,8 +41,8 @@ class ScriptHandlerTest extends TestCase
             ->expects($this->exactly(2))
             ->method('write')
             ->withConsecutive(
-                ['<info>Creating symlink for "foo" into "bar"</info>'],
-                ['<info>Creating symlink for "bar.txt" into "foo.txt"</info>']
+                ['<info>Copying folder "foo" into "bar"</info>'],
+                ['<info>Copying folder "bar.txt" into "foo.txt"</info>']
             );
 
         $this->package->setExtra([
@@ -83,8 +83,8 @@ class ScriptHandlerTest extends TestCase
             ->expects($this->exactly(1))
             ->method('write')
             ->withConsecutive(
-                ['<info>Creating symlink for "foo" into "bar"</info>'],
-                ['<info>Creating symlink for "foo2" into "bar"</info>']
+                ['<info>Copying folder "foo" into "bar"</info>'],
+                ['<info>Copying folder "foo2" into "bar"</info>']
             );
 
         $this->package->setExtra([
