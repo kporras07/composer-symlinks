@@ -33,20 +33,23 @@ class ScriptHandler
                 $filesystem->remove($targetAbsolutePath);
             }
 
-            $event->getIO()->write(sprintf(
-                '<info>Creating symlink for "%s" into "%s"</info>',
-                $sourceRelativePath,
-                $targetRelativePath
-            ));
-
             $targetDirname = dirname($targetAbsolutePath);
             $sourceRelativePath = substr($filesystem->makePathRelative($sourceAbsolutePath, $targetDirname), 0, -1);
 
             $command = 'ln -s';
+            $message = '<info>Creating symlink for "%s" into "%s"</info>';
             if (!$event->isDevMode()) {
                 $command = 'cp -r';
+                $message = '<info>Copying folder "%s" into "%s"</info>';
             }
-
+            
+            $event->getIO()->write(sprintf(
+                $message,
+                $sourceRelativePath,
+                $targetRelativePath
+            ));
+            
+            
             // Escape spaces in path.
             $targetDirname = preg_replace('/(?<!\\))[ ]/', '\\ ', $targetDirname);
 
