@@ -42,13 +42,13 @@ class ScriptHandler
                 $command = 'cp -r';
                 $message = '<info>Copying folder "%s" into "%s"</info>';
             }
-            
+
             $event->getIO()->write(sprintf(
                 $message,
                 $sourceRelativePath,
                 $targetRelativePath
             ));
-            
+
             // Escape spaces in path.
             $targetDirname = preg_replace('/(?<!\\))[ ]/', '\\ ', $targetDirname);
 
