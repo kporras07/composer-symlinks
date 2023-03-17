@@ -24,8 +24,8 @@
     },
     "scripts": {
         "test": "\"vendor/bin/phpunit\"",
-        "lint": "\"vendor/bin/phpcs\" --standard=vendor/vanio/coding-standards/ruleset.xml --extensions=php --encoding=utf-8 --ignore=vendor .",
-        "fix": "\"vendor/bin/phpcbf\" --standard=vendor/vanio/coding-standards/ruleset.xml --extensions=php --encoding=utf-8 --no-patch --ignore=vendor ."
+        "lint": "\"vendor/bin/phpcs\" --standard=vendor/vanio/coding-standards/ruleset.xml --extensions=php --encoding=utf-8 src",
+        "fix": "\"vendor/bin/phpcbf\" --standard=vendor/vanio/coding-standards/ruleset.xml --extensions=php --encoding=utf-8 --no-patch src"
     },
     "extra": {
         "branch-alias": {

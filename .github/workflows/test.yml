@@ -17,4 +17,4 @@ jobs:
       - name: lint
         run: composer lint
       - name: Run tests
-        run: ./vendor/bin/phpunit
+        run: composer test
