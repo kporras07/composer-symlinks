@@ -1,0 +1,20 @@
+name: Test
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test Github Action
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup PHP with PECL extension
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+      - name: Setup composer
+        run: composer update --no-interaction
+      - name: lint
+        run: composer lint
+      - name: Run tests
+        run: ./vendor/bin/phpunit
