@@ -13,7 +13,7 @@ jobs:
         with:
           php-version: '7.0'
       - name: Setup composer
-        run: composer update --no-interaction
+        run: composer install --no-interaction
       - name: lint
         run: composer lint
       - name: Run tests
