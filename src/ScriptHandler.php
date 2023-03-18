@@ -8,6 +8,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ScriptHandler
 {
+    // @codingStandardsIgnoreLine
     public static function createSymlinks(Event $event, Filesystem $filesystem = null)
     {
         /** @var PackageInterface $package */
