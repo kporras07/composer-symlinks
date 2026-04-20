@@ -8,7 +8,15 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ScriptHandler
 {
-    public static function createSymlinks(Event $event, Filesystem $filesystem = null)
+    /**
+     * Create the symlinks defined in the "extra" section of composer.json.
+     *
+     * @param Event $event
+     *   The Composer event object.
+     * @param Filesystem|null $filesystem
+     *   The Symfony Filesystem object.
+     */
+    public static function createSymlinks(Event $event, ?Filesystem $filesystem = null): void
     {
         /** @var PackageInterface $package */
         $package = $event->getComposer()->getPackage();
