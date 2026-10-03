@@ -37,12 +37,17 @@ class ScriptHandler
                 continue;
             }
 
-            if (file_exists($targetAbsolutePath)) {
+            // file_exists() is false for a dangling symlink, so check is_link()
+            // too; otherwise ln fails with "File exists" and the broken link stays.
+            if (file_exists($targetAbsolutePath) || is_link($targetAbsolutePath)) {
                 $filesystem->remove($targetAbsolutePath);
             }
 
             $targetDirname = dirname($targetAbsolutePath);
-            $sourceRelativePath = substr($filesystem->makePathRelative($sourceAbsolutePath, $targetDirname), 0, -1);
+            // makePathRelative() no longer appends a trailing slash when the path
+            // is an existing file (symfony/filesystem 6.4.34, 7.4.6, 8.0.6), so
+            // trim it instead of always dropping the last character.
+            $sourceRelativePath = rtrim($filesystem->makePathRelative($sourceAbsolutePath, $targetDirname), '/');
 
             $command = 'ln -s';
             $message = '<info>Creating symlink for "%s" into "%s"</info>';
